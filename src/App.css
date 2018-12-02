@@ -41,10 +41,11 @@
 }
 #calculator .screen  {
   box-sizing: content-box;
-  width: 100%;
+  width: 95%;
   height: 80px;
   margin-bottom: 10px;
   background-color: rgb(72, 73, 75);
+  padding: 0 10px;
   text-align: right;
   color: white;
   font-size: 30px;
@@ -52,9 +53,8 @@
 .calculator-buttons {
   height: 100%;
   display: grid;
-  grid-template: repeat(5, 1fr)/repeat(4, 1fr);
-  /* grid-gap:10px; */
-  /* grid-template-areas: "s s s s" */
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
 }
 #calculator button  {
   height: 80px;

@@ -7,7 +7,7 @@ class App extends Component {
     return (
       <div className="App">
       <div id="calculator">
-       <div className="screen"></div>
+       <input className="screen" placeholder="0"></input>
        <div className="calculator-buttons">
           <button className="simple-btn">C</button>
           <button className="simple-btn">+/-</button>
