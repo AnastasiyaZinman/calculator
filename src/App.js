@@ -1,33 +1,34 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Button from './components/button'
 
 class App extends Component {
   render() {
     return (
       <div className="App">
       <div id="calculator">
-       <input className="screen" placeholder="0"></input>
-       <div className="calculator-buttons">
-          <button className="simple-btn">C</button>
-          <button className="simple-btn">+/-</button>
-          <button className="simple-btn">%</button>
-          <button className="operation-btn">/</button>
-          <button className="simple-btn">7</button>
-          <button className="simple-btn">8</button>
-          <button className="simple-btn">9</button>
-          <button className="operation-btn">*</button>
-          <button className="simple-btn">4</button>
-          <button className="simple-btn">5</button>
-          <button className="simple-btn">6</button>
-          <button className="operation-btn">-</button>
-          <button className="simple-btn">1</button>
-          <button className="simple-btn">2</button>
-          <button className="simple-btn">3</button>
-          <button className="operation-btn">+</button>
-          <button className="simple-btn is-zero">0</button>
-          <button className="simple-btn">.</button>
-          <button className="operation-btn">=</button>
+       <input className="screen" placeholder="0" ></input>
+       <div className="calculator-buttons" >
+          <Button class="simple-btn" symbol="C" />
+          <Button class="simple-btn" symbol="+/-" />
+          <Button class="simple-btn" symbol="%" />
+          <Button class="operation-btn" symbol="/" />
+          <Button class="simple-btn" symbol="7" />
+          <Button class="simple-btn" symbol="8" />
+          <Button class="simple-btn" symbol="9" />
+          <Button class="operation-btn" symbol="*" />
+          <Button class="simple-btn" symbol="4" />
+          <Button class="simple-btn" symbol="5" />
+          <Button class="simple-btn" symbol="6" />
+          <Button class="operation-btn"  symbol="-" />
+          <Button class="simple-btn" symbol="1" />
+          <Button class="simple-btn" symbol="2" />
+          <Button class="simple-btn" symbol="3" />
+          <Button class="operation-btn" symbol="+" />
+          <Button class="simple-btn is-zero" symbol="0" />
+          <Button class="simple-btn" symbol="." />
+          <Button class="operation-btn" symbol="=" />
           </div>
        </div>
       </div>
