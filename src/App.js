@@ -2,19 +2,18 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Button from './components/button'
+import Display from './components/Display'
+import Result from './components/Result'
 import { observer, inject } from 'mobx-react';
 @inject("store")
 @observer
 class App extends Component {
-  // value = () => {
-  //   return this.props.store.displayValue;
-  // }
-  
   render() {
     return (
       <div className="App">
       <div id="calculator">
-       <div className="screen">{this.props.store.displayValue}</div>
+       <Display />
+       <Result /> 
        <div className="calculator-buttons" >
           <Button class="simple-btn" symbol="C" />
           <Button class="simple-btn" symbol="+/-" />
