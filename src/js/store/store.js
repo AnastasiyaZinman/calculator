@@ -11,6 +11,7 @@ class Calculator {
     @observable displayValue = '0';
 
     @action buttonClick(symbol) {
+        debugger;
         this.displayValue = (this.displayValue=='0')? '': this.displayValue;
         if (symbol >= '0' && symbol <= "9")
             this.addNumber(symbol)
@@ -24,12 +25,13 @@ class Calculator {
     changeOperator(operator) {
         
         console.log("operator", operator)
-        if (!this.value) {
-            this.value = parseInt(this.currentOperand);
-            this.currentOperand = '';
+        if(this.operator===null)    {
+        this.value = parseInt(this.currentOperand);
+        this.currentOperand = '0';
+        this.operator=operator;
         }
-        else {
-            switch (operator) {
+        else{    
+            switch (this.operator) {
                 case '-':
                     this.value = this.value - parseInt(this.currentOperand); break;
                 case '+':
@@ -40,16 +42,20 @@ class Calculator {
                 this.value = this.value / parseInt(this.currentOperand);    ; break;
                 case '%':
                     ; break;
+                // case '=':
+                // this.displayValue=this.value; break;
                 // case 'C':
                 //     this.value = 0; break;
                 default:
                     alert('Я таких значений не знаю');
             }
-            console.log('clear')
+            // console.log('clear')
             this.displayValue = this.value;
+            this.operator=operator;
+            this.currentOperand='';
         }
         this.displayValue = this.displayValue + operator;
-        this.operator = (operator!=="C")? operator:'';
+       
     }
 }
 const store = new Calculator();
