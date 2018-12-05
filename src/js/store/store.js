@@ -22,7 +22,6 @@ class Calculator {
         // console.log("this.currentOperand", this.currentOperand)
     }
     changeOperator(operator) {
-
         console.log("operator", operator)
         if (operator === 'C') {
             this.displayValue='0'
@@ -59,8 +58,16 @@ class Calculator {
         }
         this.operator = operator;
         this.displayValue = (operator !== "=" && operator !== "C" && operator !== "%")
-            ? this.displayValue + operator : this.displayValue;
+            ? this.enterBrackets(operator)  : this.displayValue;
         this.currentOperand = '0';
+    }
+    enterBrackets (operator) {
+        if (this.displayValue.match(/\d\D\d/)){
+            return ('(' + this.displayValue +')' + operator )
+        }
+        else
+        return this.displayValue + this.operator
+
     }
 }
 const store = new Calculator();
