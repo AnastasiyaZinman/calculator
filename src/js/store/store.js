@@ -14,7 +14,24 @@ class Calculator {
         debugger;
         if (symbol >= '0' && symbol <= "9")
             this.addNumber(symbol)
+        else if (symbol === 'C') {
+            this.clearDisplay()
+        }
+        else if (symbol === '%') {
+            this.convertToPercent(symbol)
+        }
         else this.changeOperator(symbol)
+    }
+    convertToPercent (symbol) {
+        this.value = (this.value) ? this.value / 100: this.currentOperand / 100;    
+        this.operator = symbol;  
+        this.changeOperator(symbol)
+    }
+    clearDisplay() {
+        this.displayValue = '0'
+        this.value = 0;
+        this.currentOperand = '0';
+        this.operator = '';
     }
     addNumber(number) {
         this.displayValue = ((this.displayValue === '0') ? '' : this.displayValue) + number;
@@ -22,52 +39,45 @@ class Calculator {
         // console.log("this.currentOperand", this.currentOperand)
     }
     changeOperator(operator) {
+        debugger;
         console.log("operator", operator)
-        if (operator === 'C') {
-            this.displayValue='0'
-            this.value = 0;
-            this.currentOperand='';
-        }
-        else if (this.operator === '' ) {
-            this.value = parseInt(this.currentOperand);
-            // this.currentOperand='';
+        if (this.operator === '' && this.currentOperand) {
+            this.value = Number(this.currentOperand);
         }
         else {
             switch (this.operator) {
                 case '-':
-                    this.value = this.value - parseInt(this.currentOperand); break;
+                    this.value = this.value - Number(this.currentOperand); break;
                 case '+':
-                    this.value = this.value + parseInt(this.currentOperand); break;
+                    this.value = this.value + Number(this.currentOperand); break;
                 case '*':
-                    this.value = this.value * parseInt(this.currentOperand); break;
+                    this.value = this.value * Number(this.currentOperand); break;
                 case '/':
-                    this.value = this.value / parseInt(this.currentOperand);; break;
-                case '%':
-                this.value= this.value/100; break;
+                    this.value = this.value / Number(this.currentOperand); break;
                 case '=':
-                // this.displayValue=this.value; 
-                break;
-                case 'C':
-                    this.value = 0; break;
+                    break;
+                case '%':
+                     break;
                 default:
                     alert('Я таких значений не знаю');
             }
-            // console.log('clear')
-            // this.displayValue = this.value;
-
         }
         this.operator = operator;
-        this.displayValue = (operator !== "=" && operator !== "C" && operator !== "%")
-            ? this.enterBrackets(operator)  : this.displayValue;
+        this.displayValue = (operator !== "=")
+            ? this.insertBrackets(operator) : this.displayValue;
         this.currentOperand = '0';
     }
-    enterBrackets (operator) {
-        if (this.displayValue.match(/\d\D\d/)){
-            return ('(' + this.displayValue +')' + operator )
+    insertBrackets(operator) {
+        if (this.displayValue.match(/\d\D\d/) && this.displayValue.slice(-1).match(/\d/)) {
+            return ('(' + this.displayValue + ')' + operator)
         }
-        else
-        return this.displayValue + this.operator
+        else return this.replaceOperator(operator) + operator;
 
+    }
+    replaceOperator() {
+        return this.displayValue.slice(-1).match(/\D^%/) ?
+            this.displayValue.slice(0, -1)
+            : this.displayValue
     }
 }
 const store = new Calculator();
