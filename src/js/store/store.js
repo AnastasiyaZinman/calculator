@@ -11,7 +11,7 @@ class Calculator {
     @observable displayValue = '0';
 
     @action buttonClick(symbol) {
-        if (symbol >= '0' && symbol <= "9")
+        if (symbol >= '0' && symbol <= "9" || symbol===".")
             this.addNumber(symbol)
         else if (symbol === 'C') {
             this.clearDisplay()
@@ -66,7 +66,7 @@ class Calculator {
         this.currentOperand = '0';
     }
     insertBrackets(operator) {
-        if (this.displayValue.match(/\d?\D\d?/) && this.displayValue.slice(-1).match(/\d/)) {
+        if (this.displayValue.match(/\d?[\-\+\*\/]\d?/) && this.displayValue.slice(-1).match(/\d/)) {
             return ('(' + this.displayValue + ')' + operator)
         }
         else return this.replaceOperator(operator) + operator;
