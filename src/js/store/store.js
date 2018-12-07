@@ -3,11 +3,7 @@ class Calculator {
     @observable value = 0;
     @observable currentOperand = '0';
     operator = '';
-    // numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-    // operators = ['+', '-', '*', '/', '%']
-    // @computed displayValue () {
-    //     return (this.value + this.operator + this.currentOperand)
-    // };
+  
     @observable displayValue = '0';
 
     @action buttonClick(symbol) {
@@ -56,15 +52,16 @@ class Calculator {
             this.value = Number(this.currentOperand);
         }
         else {
+            let operand = this.currentOperand;
             switch (this.operator) {
                 case '-':
-                    this.value = this.value - Number(this.currentOperand); break;
+                    this.value = this.value - Number(operand); break;
                 case '+':
-                    this.value = this.value + Number(this.currentOperand); break;
+                    this.value = this.value + Number(operand); break;
                 case '*':
-                    this.value = this.value * Number(this.currentOperand); break;
+                    this.value = this.value * (Number(operand!=='0') ? operand : 1); break;
                 case '/':
-                    this.value = this.value / Number(this.currentOperand); break;
+                    this.value = this.value / (Number(operand!=='0') ? operand : 1); break;
                 case '=':
                     break;
                 case '%':
@@ -86,7 +83,7 @@ class Calculator {
 
     }
     replaceOperator() {
-        return this.displayValue.slice(-1).match(/\D&^%/) ?
+        return this.displayValue.slice(-1).match(/\D/) ? //&^%
             this.displayValue.slice(0, -1)
             : this.displayValue
     }
