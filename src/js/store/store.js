@@ -11,8 +11,11 @@ class Calculator {
     @observable displayValue = '0';
 
     @action buttonClick(symbol) {
-        if (symbol >= '0' && symbol <= "9" || symbol===".")
+        if (symbol >= '0' && symbol <= "9" )
             this.addNumber(symbol)
+        else if  (symbol===".") {
+            this.addPoint(symbol)
+        }
         else if (symbol === 'C') {
             this.clearDisplay()
         }
@@ -20,6 +23,16 @@ class Calculator {
             this.convertToPercent(symbol)
         }
         else this.changeOperator(symbol)
+    }
+    addPoint (point)  {
+       console.log(this.currentOperand.match(/\./));
+       if (this.currentOperand.match(/\./) == null) {
+           this.currentOperand = this.currentOperand + point
+            this.displayValue = this.displayValue + point
+       }
+       else {
+           alert ("number is already decimal")
+       }
     }
     convertToPercent (symbol) {
         this.value = (this.value) ? this.value / 100: this.currentOperand / 100;    
@@ -37,7 +50,7 @@ class Calculator {
         this.currentOperand = ((this.currentOperand === '0') ? '' : this.currentOperand) + number;
     }
     changeOperator(operator) {
-        debugger;
+        // debugger;
         console.log("operator", operator)
         if (this.operator === '' && this.currentOperand) {
             this.value = Number(this.currentOperand);
