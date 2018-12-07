@@ -7,7 +7,8 @@ class Calculator {
     @observable displayValue = '0';
 
     @action buttonClick(symbol) {
-        if (symbol >= '0' && symbol <= "9" )
+        debugger
+        if (symbol >= '0' && symbol <= "9")
             this.addNumber(symbol)
         else if  (symbol===".") {
             this.addPoint(symbol)
@@ -42,13 +43,18 @@ class Calculator {
         this.operator = '';
     }
     addNumber(number) {
+        if (this.operator!=='=' && this.displayValue.slice(-1).match(/[\-\+\*\/]/)!==-1) {
         this.displayValue = ((this.displayValue === '0') ? '' : this.displayValue) + number;
         this.currentOperand = ((this.currentOperand === '0') ? '' : this.currentOperand) + number;
+        }
+        else {
+            this.displayValue=this.displayValue.slice(0,-1);
+            alert("Firstly, please, enter operator!")
+        }
     }
     changeOperator(operator) {
-        // debugger;
         console.log("operator", operator)
-        if (this.operator === '' && this.currentOperand) {
+        if (this.operator === '') { // && this.currentOperand
             this.value = Number(this.currentOperand);
         }
         else {
