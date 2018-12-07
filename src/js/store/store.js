@@ -11,7 +11,6 @@ class Calculator {
     @observable displayValue = '0';
 
     @action buttonClick(symbol) {
-        debugger;
         if (symbol >= '0' && symbol <= "9")
             this.addNumber(symbol)
         else if (symbol === 'C') {
@@ -36,7 +35,6 @@ class Calculator {
     addNumber(number) {
         this.displayValue = ((this.displayValue === '0') ? '' : this.displayValue) + number;
         this.currentOperand = ((this.currentOperand === '0') ? '' : this.currentOperand) + number;
-        // console.log("this.currentOperand", this.currentOperand)
     }
     changeOperator(operator) {
         debugger;
@@ -68,14 +66,14 @@ class Calculator {
         this.currentOperand = '0';
     }
     insertBrackets(operator) {
-        if (this.displayValue.match(/\d\D\d/) && this.displayValue.slice(-1).match(/\d/)) {
+        if (this.displayValue.match(/\d?\D\d?/) && this.displayValue.slice(-1).match(/\d/)) {
             return ('(' + this.displayValue + ')' + operator)
         }
         else return this.replaceOperator(operator) + operator;
 
     }
     replaceOperator() {
-        return this.displayValue.slice(-1).match(/\D^%/) ?
+        return this.displayValue.slice(-1).match(/\D&^%/) ?
             this.displayValue.slice(0, -1)
             : this.displayValue
     }
