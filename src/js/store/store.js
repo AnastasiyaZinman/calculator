@@ -3,14 +3,14 @@ class Calculator {
     @observable value = 0;
     @observable currentOperand = '0';
     operator = '';
-  
+
     @observable displayValue = '0';
 
     @action buttonClick(symbol) {
         debugger
         if (symbol >= '0' && symbol <= "9")
             this.addNumber(symbol)
-        else if  (symbol===".") {
+        else if (symbol === ".") {
             this.addPoint(symbol)
         }
         else if (symbol === 'C') {
@@ -21,20 +21,22 @@ class Calculator {
         }
         else this.changeOperator(symbol)
     }
-    addPoint (point)  {
-       console.log(this.currentOperand.match(/\./));
-       if (this.currentOperand.match(/\./) == null) {
-           this.currentOperand = this.currentOperand + point
+    addPoint(point) {
+        console.log(this.currentOperand.match(/\./));
+        if (this.currentOperand.match(/\./) == null) {
+            this.currentOperand = this.currentOperand + point
             this.displayValue = this.displayValue + point
-       }
-       else {
-           alert ("number is already decimal")
-       }
+        }
+        else {
+            alert("number is already decimal")
+        }
     }
-    convertToPercent (symbol) {
-        this.value = (this.value) ? this.value / 100: this.currentOperand / 100;    
-        this.operator = symbol;  
-        this.changeOperator(symbol)
+    convertToPercent(symbol) {
+        if (this.value && this.currentOperand) this.changeOperator(symbol)
+        this.value = (this.value) ? this.value / 100 : (this.currentOperand / 100);
+        this.displayValue = String(this.value);
+        this.changeDisplayValue(symbol)
+        
     }
     clearDisplay() {
         this.displayValue = '0'
@@ -43,13 +45,9 @@ class Calculator {
         this.operator = '';
     }
     addNumber(number) {
-        if (this.operator!=='=' && this.displayValue.slice(-1).match(/[\-\+\*\/]/)!==-1) {
-        this.displayValue = ((this.displayValue === '0') ? '' : this.displayValue) + number;
-        this.currentOperand = ((this.currentOperand === '0') ? '' : this.currentOperand) + number;
-        }
-        else {
-            this.displayValue=this.displayValue.slice(0,-1);
-            alert("Firstly, please, enter operator!")
+        if (this.operator !== '=' || this.value === 0) {
+            this.displayValue = ((this.displayValue === '0') ? '' : this.displayValue) + number;
+            this.currentOperand = ((this.currentOperand === '0') ? '' : this.currentOperand) + number;
         }
     }
     changeOperator(operator) {
@@ -65,19 +63,23 @@ class Calculator {
                 case '+':
                     this.value = this.value + Number(operand); break;
                 case '*':
-                    this.value = this.value * (Number(operand!=='0') ? operand : 1); break;
+                    this.value = this.value * (Number(operand !== '0') ? operand : 1); break;
                 case '/':
-                    this.value = this.value / (Number(operand!=='0') ? operand : 1); break;
+                    this.value = this.value / (Number(operand !== '0') ? operand : 1); break;
                 case '=':
+                    this.value = (operand !== '0') ? operand : this.value
                     break;
-                case '%':
-                     break;
+                case '%': break;
                 default:
                     alert('Я таких значений не знаю');
             }
         }
+        this.changeDisplayValue(operator)
+    }
+
+    changeDisplayValue(operator) {
         this.operator = operator;
-        this.displayValue = (operator !== "=")
+        this.displayValue = (operator !== "=" && operator !== "%")
             ? this.insertBrackets(operator) : this.displayValue;
         this.currentOperand = '0';
     }
@@ -85,7 +87,7 @@ class Calculator {
         if (this.displayValue.match(/\d?[\-\+\*\/]\d?/) && this.displayValue.slice(-1).match(/\d/)) {
             return ('(' + this.displayValue + ')' + operator)
         }
-        else return this.replaceOperator(operator) + operator;
+        else return this.replaceOperator() + operator;
 
     }
     replaceOperator() {
