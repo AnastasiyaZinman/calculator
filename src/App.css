@@ -39,16 +39,20 @@
   padding: 15px;
   
 }
-#calculator .screen  {
+#calculator .screen , .result {
   box-sizing: content-box;
   width: 95%;
   height: 80px;
-  margin-bottom: 10px;
   background-color: rgb(72, 73, 75);
   padding: 0 10px;
   text-align: right;
-  color: white;
-  font-size: 30px;
+  color:rgb(190, 190, 197);
+  font-size: 25px;
+}
+.result {
+ color:white;
+ margin-bottom: 10px;
+ font-size: 30px;
 }
 .calculator-buttons {
   height: 100%;
