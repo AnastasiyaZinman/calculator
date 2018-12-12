@@ -15,8 +15,8 @@ class App extends Component {
        <Display />
        <Result /> 
        <div className="calculator-buttons" >
-          <Button class="operation-btn is-zero" symbol="C" />
-          {/* <Button class="simple-btn" symbol="+/-" /> */}
+          <Button class="operation-btn" symbol="C" />
+          <Button class="operation-btn" symbol="+/-" />
           <Button class="operation-btn" symbol="%" />
           <Button class="operation-btn" symbol="/" />
           <Button class="simple-btn" symbol="7" />
