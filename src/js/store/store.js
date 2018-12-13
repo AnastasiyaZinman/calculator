@@ -6,8 +6,8 @@ class Calculator {
     operations = /[\+,\-,\*,\/]/;
     operationsOrDigit = /[\-,\+,\*,\/,\%]|\d/;
     mathExpr = /\d?[\-,\+,\*,\/]\d?/;
+    operandSymbols = /[\d,\.,\%]/;
     percentExpr = /\%/g;
-    toggleResult = false;
 
     @action buttonClick(symbol) {
         if (symbol.match(this.operationsOrDigit)) {
@@ -17,15 +17,15 @@ class Calculator {
             this.executeOperation(symbol)
         }
     }
-    eval(expr) {
+    eval(strExpr) {
         try {
-            expr = (expr.match(this.percentExpr)) ? expr.replace(this.percentExpr,'/100') : expr; // if displayValue includes % replace to division on 100
-            return eval(expr) //<29 symbols
-          } 
-          catch (err) {
-                 alert("Неправильное выражение") 
-                 this.clearDisplay("0") 
-          }
+            strExpr = (strExpr.match(this.percentExpr)) ? strExpr.replace(this.percentExpr, '/100') : strExpr; // if displayValue includes % replace to division on 100
+            return eval(strExpr) //<29 symbols
+        }
+        catch (err) {
+            alert("Неправильное выражение")
+            this.clearDisplay("0")
+        }
     }
 
     addSymbol(symbol) {
@@ -45,19 +45,17 @@ class Calculator {
         }
         else {
             this.currentOperand = this.currentOperand + symbol; //add digits to currentOperand 
-            this.value = (this.displayValue.match(this.mathExpr)||this.displayValue.match(this.percentExpr)) ? this.eval(this.displayValue) : ''; //show result if entered not just a number but math expression
+            this.value = (this.displayValue.match(this.mathExpr) || this.displayValue.match(this.percentExpr)) ? this.eval(this.displayValue) : ''; //show result if entered not just a number but math expression
         }
     }
     executeOperation(operation) {
         switch (operation) {
-            case 'C':
+            case 'Clear':
                 this.clearDisplay('0'); break;
+            case 'C':
+                this.deleteLastSymbol(); break;
             case '.':
                 this.addPoint('.'); break;
-            // case '+/-':
-            //      this.toggleSignOfResult();
-            //     this.displayValue = (this.displayValue.match(/\-\(/)) ? this.deleteBrackets()  : this.addBrackets() ;
-            //     break;
             case '=':
                 this.displayValue = String(this.eval(this.displayValue))
                 this.value = '';
@@ -66,13 +64,29 @@ class Calculator {
                 alert('Я таких значений не знаю');
         }
     }
-    // deleteBrackets () {
-    //     this.displayValue = this.displayValue.slice(1).replace(/[\(\)]/g)
-    // }
-    // addBrackets () {
-    //     this.displayValue = "-(" + this.displayValue + ")"
-    // }
-    // In order to avoid additional points Add point just if count 
+    //Delete last typed symbol in displayValue and currentOperand
+    deleteLastSymbol() {
+        this.currentOperand = (this.displayValue.slice(-1).match(this.operandSymbols)) ? this.sliceLastSymbol(this.currentOperand) : this.currentOperand;
+        this.displayValue = this.sliceLastSymbol(this.displayValue);
+        this.currentOperand = this.selectLastOperand()
+        this.value = '';
+    }
+    //Function selects last Operand 
+    selectLastOperand() {
+        let currentOperand = "";
+        let i = this.displayValue.length - 1;
+        while (i >= 0 && this.displayValue[i].match(this.operandSymbols)) {
+            currentOperand += this.displayValue[i];
+            i--;
+        }
+        return currentOperand
+    }
+
+    //Return str without last symbol
+    sliceLastSymbol(str) {
+        return str.slice(0, -1);
+
+    }
     addPoint(point) {
         if (this.currentOperand.indexOf(point) == -1) {
             this.displayValue += point;
@@ -87,9 +101,6 @@ class Calculator {
         this.displayValue = '' + symbol
         this.value = '';
         this.currentOperand = '';
-    }
-    toggleSignOfResult() {
-        this.value = 0 - this.value;
     }
 }
 const store = new Calculator();
