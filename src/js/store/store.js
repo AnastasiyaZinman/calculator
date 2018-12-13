@@ -6,7 +6,8 @@ class Calculator {
     operations = /[\+,\-,\*,\/]/;
     operationsOrDigit = /[\-\+\*\/\%]|\d/;
     mathExpr = /\d?[\-\+\*\/]\d?/;
-    percentExpr = /\%/;
+    percentExpr = /\%/g;
+    // toggleResultToNegative = false;
 
     @action buttonClick(symbol) {
         if (symbol.match(this.operationsOrDigit)) {
@@ -16,10 +17,9 @@ class Calculator {
             this.executeOperation(symbol)
         }
     }
-
     eval(expr) {
         try {
-            expr = (expr.match(/\%/)) ? expr.replace(/\%/g,'/100') : expr;
+            expr = (expr.match(this.percentExpr)) ? expr.replace(this.percentExpr,'/100') : expr; // if displayValue includes % replace to division on 100
             return eval(expr) //<29 symbols
           } 
           catch (err) {
