@@ -4,10 +4,10 @@ class Calculator {
     @observable currentOperand = '';
     @observable displayValue = '0';
     operations = /[\+,\-,\*,\/]/;
-    operationsOrDigit = /[\-\+\*\/\%]|\d/;
-    mathExpr = /\d?[\-\+\*\/]\d?/;
+    operationsOrDigit = /[\-,\+,\*,\/,\%]|\d/;
+    mathExpr = /\d?[\-,\+,\*,\/]\d?/;
     percentExpr = /\%/g;
-    // toggleResultToNegative = false;
+    toggleResult = false;
 
     @action buttonClick(symbol) {
         if (symbol.match(this.operationsOrDigit)) {
@@ -54,8 +54,10 @@ class Calculator {
                 this.clearDisplay('0'); break;
             case '.':
                 this.addPoint('.'); break;
-            case '+/-':
-                ; break;
+            // case '+/-':
+            //      this.toggleSignOfResult();
+            //     this.displayValue = (this.displayValue.match(/\-\(/)) ? this.deleteBrackets()  : this.addBrackets() ;
+            //     break;
             case '=':
                 this.displayValue = String(this.eval(this.displayValue))
                 this.value = '';
@@ -64,7 +66,13 @@ class Calculator {
                 alert('Я таких значений не знаю');
         }
     }
-    // in order to avoid additional points Add point just if count 
+    // deleteBrackets () {
+    //     this.displayValue = this.displayValue.slice(1).replace(/[\(\)]/g)
+    // }
+    // addBrackets () {
+    //     this.displayValue = "-(" + this.displayValue + ")"
+    // }
+    // In order to avoid additional points Add point just if count 
     addPoint(point) {
         if (this.currentOperand.indexOf(point) == -1) {
             this.displayValue += point;
@@ -74,11 +82,14 @@ class Calculator {
             alert("number is already decimal")
         }
     }
-
+    //Clear screen
     clearDisplay(symbol) {
         this.displayValue = '' + symbol
         this.value = '';
         this.currentOperand = '';
+    }
+    toggleSignOfResult() {
+        this.value = 0 - this.value;
     }
 }
 const store = new Calculator();
