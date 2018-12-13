@@ -48,6 +48,7 @@
   text-align: right;
   color:rgb(190, 190, 197);
   font-size: 25px;
+  overflow: hidden;
 }
 .result {
  color:white;

@@ -4,6 +4,7 @@ class Calculator {
     @observable currentOperand = '';
     @observable displayValue = '0';
     operations = /[\+,\-,\*,\/]/;
+
     @action buttonClick(symbol) {
         if (symbol.match(/[\-\+\*\/]|\d/)) {
             this.addSymbol(symbol)
@@ -19,7 +20,7 @@ class Calculator {
 
     addSymbol(symbol) {
         console.log ("this.displayValue",this.displayValue);
-        if (this.displayValue.slice(-1).match(this.operations) && symbol.match(this.operations))  //if last enterred symbol is not digit and current digit is sign of operation
+        if (this.displayValue.slice(-1).match(this.operations) && symbol.match(this.operations))  //if last entered symbol is not digit and current digit is sign of operation
         {
             this.displayValue = this.displayValue.slice(0, -1) + symbol;
         }
@@ -34,7 +35,7 @@ class Calculator {
         }
         else {
             this.currentOperand = this.currentOperand + symbol;
-            this.value = this.eval(this.displayValue)
+            this.value =(this.displayValue.match(/\d?[\-\+\*\/]\d?/)) ? this.eval(this.displayValue) : '';
         }
     }
     executeOperation(operation) {
