@@ -12,8 +12,10 @@ class App extends Component {
     return (
       <div className="App">
       <div id="calculator">
+      <div className="display">
        <Display />
        <Result /> 
+       </div>
        <div className="calculator-buttons" >
           <Button class="operation-btn" symbol="Clear" />
           <Button class="operation-btn" symbol="C" />

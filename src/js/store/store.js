@@ -10,6 +10,18 @@ class Calculator {
     percentExpr = /\%/g;
 
     @action buttonClick(symbol) {
+        if (this.displayValue.length < 20 ) {
+            this.inputSymbol(symbol)
+        }
+        else if(!symbol.match(this.operationsOrDigit)){
+            this.executeOperation(symbol)
+        }
+        else {
+            alert("Long expression")
+        }
+    }
+
+    inputSymbol(symbol) {
         if (symbol.match(this.operationsOrDigit)) {
             this.addSymbol(symbol)
         }
@@ -57,7 +69,7 @@ class Calculator {
             case '.':
                 this.addPoint('.'); break;
             case '=':
-                this.displayValue = String(this.eval(this.displayValue))
+                this.displayValue = (this.eval(this.displayValue)) !== undefined ? String(this.eval(this.displayValue)) : "NaN";
                 this.value = '';
                 break;
             default:
