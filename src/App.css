@@ -54,7 +54,7 @@
 }
 .result {
   height: 40px;
-  color:rgb(190, 190, 197);;
+  color:rgb(190, 190, 197);
   margin-bottom: 10px;
   font-size: 25px;
   margin: 5px;
@@ -91,4 +91,9 @@ color: rgb(61, 60, 60);
 }
 .operation-btn  {
   background-color: orange;
+}
+@media only screen and (max-width: 400px) {
+  #calculator {
+    min-width: 400px;
+  }
 }
