@@ -1,7 +1,7 @@
 import { observable, action } from "mobx";
 class Calculator {
     @observable value = '';
-    @observable currentOperand = '';
+    @observable currentOperand = ''; //last Operand for checking count of dots in a record (is it already decimal or not
     @observable displayValue = '0';
     operations = /[\+,\-,\*,\/]/;
     operationsOrDigit = /[\-,\+,\*,\/,\%]|\d/;
@@ -96,7 +96,7 @@ class Calculator {
 
     //Return str without last symbol
     sliceLastSymbol(str) {
-        return str.slice(0, -1);
+        return (str.length!==1) ? str.slice(0, -1) : "0";
 
     }
     addPoint(point) {
